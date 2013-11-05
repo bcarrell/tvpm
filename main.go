@@ -1,8 +1,10 @@
 package main
 
 import (
-	"github.com/bcarrell/tvpm/command"
 	tdb "github.com/bcarrell/tvpm/db"
+	"github.com/bcarrell/tvpm/episode"
+	"github.com/bcarrell/tvpm/indexer"
+	"github.com/bcarrell/tvpm/series"
 	"github.com/codegangsta/cli"
 	"os"
 )
@@ -27,13 +29,13 @@ func main() {
 			Name:      "find",
 			ShortName: "f",
 			Usage:     "find an episode",
-			Action:    command.Find,
+			Action:    episode.FindEpisode,
 		},
 		{
 			Name:      "find-series",
 			ShortName: "fs",
 			Usage:     "find a series",
-			Action:    command.FindSeries,
+			Action:    series.FindSeries,
 		},
 		// {
 		// 	Name:      "list",
@@ -52,7 +54,7 @@ func main() {
 					"your API key for the indexer",
 				},
 			},
-			Action: command.AddIndexer,
+			Action: indexer.AddIndexer,
 		},
 		// {
 		// 	Name:      "add-series",

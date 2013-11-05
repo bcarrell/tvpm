@@ -1,11 +1,17 @@
-package command
+package indexer
 
 import (
+	"database/sql"
 	"fmt"
-	"github.com/bcarrell/tvpm/db"
+	tdb "github.com/bcarrell/tvpm/db"
 	"github.com/codegangsta/cli"
+	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"os"
+)
+
+var (
+	dbInfo tdb.DbInfo = tdb.GetDbInfo()
 )
 
 func AddIndexer(c *cli.Context) {
@@ -19,12 +25,19 @@ func AddIndexer(c *cli.Context) {
 	}
 	if len(key) == 0 {
 		fmt.Println("Missing an API key.")
-		cli.ShowCommandHelp(c, "find-series")
+		cli.ShowCommandHelp(c, "add-indexer")
 		os.Exit(1)
 	}
 	url := args[0]
-	// add to indexer db
-	err := db.InsertIndexer(url, key)
+	db, err := sql.Open("sqlite3", dbInfo.FullPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	sql := "INSERT INTO Indexer(Url, ApiKey) values('%s', '%s')"
+	sql = fmt.Sprintf(sql, url, key)
+
+	_, err = db.Exec(sql)
 	if err != nil {
 		log.Fatal(err)
 	}

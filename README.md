@@ -10,4 +10,5 @@ Currently, support is limited to newsgroups.
 Environment variables
 ---------------------
 
-"TRAKT_API_KEY"
+* TRAKT_API_KEY
+* TVPM_DB_PATH

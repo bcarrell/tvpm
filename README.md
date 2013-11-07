@@ -5,6 +5,8 @@ tvpm is a television episode package manager for newsgroups.
 
 The goal of the project is to provide a command line tool for managing your media.
 
+**This tool should be considered alpha and liable to break or change massively.**
+
 
 Environment variables
 ---------------------

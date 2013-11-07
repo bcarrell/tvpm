@@ -9,21 +9,23 @@ inspired by all of the great package managers out there.
 **This tool should be considered alpha and has the potential to break or change 
 massively.**
 
+This tool depends on [Sabnzbd](http://sabnzbd.org/).
+
 Available commands
 ------------------
 All commands are available via `tvpm --help` or just `tvpm`.
 
 	tvpm add-indexer <indexer url> --apiKey=<indexer api key>
-This command adds an available newsgroup indexer to your tvpm database.
+The above command adds an available newsgroup indexer to your tvpm database.
 
 	tvpm find-series <series>
-This command uses trakt to find a series.  Currently, this command is somewhat of 
+The above command uses trakt to find a series.  Currently, this command is somewhat of 
 a dead end.
 
 	tvpm find <query>
-This command searches all of your indexers for the specified tv episode.  Format 
+The above command searches all of your indexers for the specified tv episode.  Format 
 your search like `tvpm find game+of+thrones` or `tvpm find game-of-thrones`.  Underscores 
-should work too.
+should work too.  Then, it'll give you the option to send the one you want to sabnzbd.
 
 
 Environment variables
@@ -41,3 +43,10 @@ Building the binary
 -------------------
 
 Make sure you have Go installed, and `go install` the repo.
+
+
+Contributing
+------------
+
+I welcome any and all pull requests; I'll try to keep issues created for things 
+I find important, but if you have suggestions, feel free.

@@ -13,14 +13,14 @@ Available commands
 ------------------
 All commands are available via `tvpm --help` or just `tvpm`.
 
-`tvpm add-indexer <indexer url> --apiKey=<indexer api key>`
+	tvpm add-indexer <indexer url> --apiKey=<indexer api key>
 This command adds an available newsgroup indexer to your tvpm database.
 
-```tvpm find-series <series>```
+	tvpm find-series <series>
 This command uses trakt to find a series.  Currently, this command is somewhat of 
 a dead end.
 
-`tvpm find <query>`
+	tvpm find <query>
 This command searches all of your indexers for the specified tv episode.  Format 
 your search like `tvpm find game+of+thrones` or `tvpm find game-of-thrones`.  Underscores 
 should work too.

@@ -21,6 +21,7 @@ Quickstart
 	echo 'export TVPM_DB_PATH="your_path_here"' >> $HOME/.zshrc
 	echo 'export SABNZBD_URL="your_running_sabnzbd_url_here"' >> $HOME/.zshrc
 	echo 'export SABNZBD_API_KEY="your_api_key_here"' >> $HOME/.zshrc
+	source $HOME/.zshrc
 
 	tvpm
 

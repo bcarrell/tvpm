@@ -18,6 +18,7 @@ var dbInfo tdb.DbInfo = tdb.GetDbInfo()
 
 type Item struct {
 	Title string
+	Link  string
 }
 
 type Payload struct {
@@ -93,26 +94,46 @@ func searchIndexer(query, url, apiKey string, jsonChannel chan<- []Item) {
 // Aggregates the return data from all goroutines and sends to console.
 // Blocks waiting for user input on which episode to send to sabnzbd.
 func output(jsonChannel <-chan []Item, expected int) {
-	w := tabwriter.NewWriter(os.Stdout, 0, 5, 5, ' ', 0)
+	data := make([]Item, 0)
 	for i := 0; i < expected; i++ {
-		data := <-jsonChannel
-		for index, item := range data {
-			fmt.Fprintf(
-				w,
-				"%d\t%s\n",
-				index+1,
-				item.Title,
-			)
+		resultFromIndexer := <-jsonChannel
+		for _, item := range resultFromIndexer {
+			data = append(data, item)
 		}
 	}
+	w := tabwriter.NewWriter(os.Stdout, 0, 5, 5, ' ', 0)
+	for index, item := range data {
+		fmt.Fprintf(
+			w,
+			"%d\t»\t%s\n",
+			index+1,
+			item.Title,
+		)
+	}
 	w.Flush()
-	getChoice()
+	getChoice(data)
 }
 
 // Gets the user's file choice out of the list of returned episodes and sends
 // the url to sabnzbd for downloading.
-func getChoice() {
-	fmt.Print("Enter the file number (1-10) to send to sabnzbd: ")
-	var input float64
-	fmt.Scanf("%f", &input)
+func getChoice(data []Item) {
+	fmt.Printf("Enter the file number (1-%d) to send to sabnzbd: ", len(data))
+	var input int
+	fmt.Scanf("%d", &input)
+	sendToSabnzbd(data[input-1])
+}
+
+// Sends the specified file to be downloaded by Sabnzbd
+func sendToSabnzbd(item Item) {
+	sabnzbdUrl := os.Getenv("SABNZBD_URL")
+	sabnzbdKey := os.Getenv("SABNZBD_API_KEY")
+	link := strings.Replace(item.Link, "&", "%26", -1)
+	title := item.Title
+
+	// construct url
+	url := sabnzbdUrl + "api?mode=addurl&name=" + link + "&nzbname=" + title +
+		"&apikey=" + sabnzbdKey
+
+	// off we go!
+	http.Get(url)
 }

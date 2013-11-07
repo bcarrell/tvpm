@@ -11,6 +11,28 @@ massively.**
 
 This tool depends on [Sabnzbd](http://sabnzbd.org/).
 
+Quickstart
+==========
+
+	git clone git@github.com:bcarrell/tvpm.git $GOPATH/src/github.com/bcarrell/tvpm
+	cd $GOPATH/src/github.com/bcarrell/tvpm && go install
+
+	echo 'export TRAKT_API_KEY="your_api_key_here"' >> $HOME/.zshrc
+	echo 'export TVPM_DB_PATH="your_path_here"' >> $HOME/.zshrc
+	echo 'export SABNZBD_URL="your_running_sabnzbd_url_here"' >> $HOME/.zshrc
+	echo 'export SABNZBD_API_KEY="your_api_key_here"' >> $HOME/.zshrc
+
+	tvpm
+
+
+For tvpm to work properly, set the following env variables for bash/zsh/whatever:
+
+* **TRAKT_API_KEY** -- your API key for trakt.tv
+* **TVPM_DB_PATH** -- absolute path where you want the tvpm sqlite3 db to be stored
+* **SABNZBD_URL** -- the url of your running sabnzbd installation
+* **SABNZBD_API_KEY** -- your sabnzbd api key
+
+
 Available commands
 ------------------
 All commands are available via `tvpm --help` or just `tvpm`.
@@ -27,22 +49,6 @@ The above command searches all of your indexers for the specified tv episode.  F
 your search like `tvpm find game+of+thrones` or `tvpm find game-of-thrones`.  Underscores 
 should work too.  Then, it'll give you the option to send the one you want to sabnzbd.
 
-
-Environment variables
----------------------
-
-For tvpm to work properly, set the following env variables for bash/zsh/whatever:
-
-* **TRAKT_API_KEY** -- your API key for trakt.tv
-* **TVPM_DB_PATH** -- absolute path where you want the tvpm sqlite3 db to be stored
-* **SABNZBD_URL** -- the url of your running sabnzbd installation
-* **SABNZBD_API_KEY** -- your sabnzbd api key
-
-
-Building the binary
--------------------
-
-Make sure you have Go installed, and `go install` the repo.
 
 
 Contributing
